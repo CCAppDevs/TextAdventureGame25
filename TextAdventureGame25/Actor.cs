@@ -13,6 +13,8 @@ namespace TextAdventureGame25
         public int MaxHealth { get; set; }
         public int Level { get; set; }
         public int AttackPower { get; set; }
+        public int PosX { get; set; }
+        public int PosY { get; set; }
 
         // TODO: add inventory slots (items, weapons, armor)
 
@@ -25,19 +27,28 @@ namespace TextAdventureGame25
             AttackPower = 1;
         }
 
-        //public void TakeDamage(int amount)
-        //{
-        //    Health = Health - amount;
+        public void MoveRight(int spaces)
+        {
+            PosX += spaces;
+            // TODO: look for edge of map, can i move here
+        }
 
-        //    // clamp the value to 0-MaxHealth
-        //    if (Health < 0)
-        //    {
-        //        Health = 0;
-        //    }
-        //    else if (Health > MaxHealth)
-        //    {
-        //        Health = MaxHealth;
-        //    }
-        //}
+        public void MoveDown(int spaces) 
+        {
+            PosY += spaces;
+            // TODO: look for edge of map, can i move here
+        }
+
+        public void Teleport(int x, int y)
+        {
+            PosX = x;
+            PosY = y;
+            // TODO: does this position exist on the map, can i move here
+        }
+
+        public bool IsDead()
+        {
+            return Health <= 0;
+        }
     }
 }
