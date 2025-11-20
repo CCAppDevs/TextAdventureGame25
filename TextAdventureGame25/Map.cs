@@ -8,13 +8,13 @@ namespace TextAdventureGame25
 {
     public class Map
     {
-        public int[,] Rooms { get; set; }
+        public List<List<IRoom>> Rooms { get; set; }
         public int SizeX { get; }
         public int SizeY { get; }
 
         public Map(int sizeX, int sizeY)
         {
-            Rooms = new int[sizeX, sizeY];
+            Rooms = new List<List<IRoom>>();
             SizeX = sizeX;
             SizeY = sizeY;
 
@@ -25,29 +25,49 @@ namespace TextAdventureGame25
             // loop over x
             for (int y = 0; y < sizeY; y++)
             {
+                // creates the empty row
+                Rooms.Add(new List<IRoom>());
+
+                // for each column in the current row
                 for (int x = 0; x < sizeX; x++)
                 {
                     // choose a random room type (0-4)
-                    int roomType = rnd.Next(0, 5);
+                    int roomType = rnd.Next(0, 2);
+
+                    // TODO: Weight which type of room spawns
+                    IRoom spawnedRoom;
+
+                    if (roomType == 0)
+                    {
+                        spawnedRoom = new RoomEntrance();
+                    }
+                    else if (roomType == 1)
+                    {
+                        spawnedRoom = new RoomEmpty();
+                    }
+                    else
+                    {
+                        spawnedRoom = new RoomEmpty();
+                    }
 
                     // put that in position x,y of the map
-                    Rooms[x, y] = roomType;
+                    Rooms[y].Add(spawnedRoom);
                 }
             }
         }
 
         public void PrintMap()
         {
-            for (int y = 0; y < Rooms.GetLength(1); y++)
+            for (int y = 0; y < Rooms.Count; y++)
             {
-                for (int x = 0; x < Rooms.GetLength(0); x++)
+                for (int x = 0; x < Rooms[y].Count; x++)
                 {
-                    if (Rooms[x, y] == 0)
+                    if (Rooms[y][x] == 0)
                     {
                         Console.Write("[ ]");
                     } else
                     {
-                        Console.Write($"[{Rooms[x, y]}]");
+                        Console.Write($"[{Rooms[y][x]}]");
                     }
                 }
                 Console.WriteLine();
