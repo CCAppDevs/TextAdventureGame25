@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextAdventureGame25.Rooms;
 
 namespace TextAdventureGame25
 {
@@ -32,28 +33,42 @@ namespace TextAdventureGame25
                 for (int x = 0; x < sizeX; x++)
                 {
                     // choose a random room type (0-4)
-                    int roomType = rnd.Next(0, 2);
+                    int roomType = rnd.Next(0, 100);
 
                     // TODO: Weight which type of room spawns
                     IRoom spawnedRoom;
 
-                    if (roomType == 0)
+                    if (roomType <= 10)
                     {
-                        spawnedRoom = new RoomEntrance();
+                        spawnedRoom = new RoomLoot('$', 100);
                     }
-                    else if (roomType == 1)
+                    else if (roomType <= 50)
                     {
-                        spawnedRoom = new RoomEmpty();
+                        spawnedRoom = new RoomEmpty(' ');
+                    }
+                    else if (roomType <= 75)
+                    {
+                        spawnedRoom = new RoomMonster('M', new Enemy("Goblin", 10));
+                    }
+                    else if (roomType <= 80)
+                    {
+                        spawnedRoom = new RoomPuzzle('P');
                     }
                     else
                     {
-                        spawnedRoom = new RoomEmpty();
+                        spawnedRoom = new RoomEmpty(' ');
                     }
 
                     // put that in position x,y of the map
                     Rooms[y].Add(spawnedRoom);
                 }
             }
+
+            // replace two rooms with enterance and boss room
+            int enteranceX = rnd.Next(0, Rooms[0].Count());
+            int enteranceY = rnd.Next(0, Rooms.Count());
+
+            Rooms[enteranceY][enteranceX] = new RoomEntrance('S');
         }
 
         public void PrintMap()
@@ -62,13 +77,7 @@ namespace TextAdventureGame25
             {
                 for (int x = 0; x < Rooms[y].Count; x++)
                 {
-                    if (Rooms[y][x] == 0)
-                    {
-                        Console.Write("[ ]");
-                    } else
-                    {
-                        Console.Write($"[{Rooms[y][x]}]");
-                    }
+                    Console.Write($"[{Rooms[y][x].GetRoomSymbol()}]");
                 }
                 Console.WriteLine();
             }

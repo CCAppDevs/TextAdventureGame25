@@ -4,26 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextAdventureGame25
+namespace TextAdventureGame25.Rooms
 {
-    public class RoomEntrance : IRoom
+    public class RoomEntrance : AbstractRoom
     {
-        public void OnEnter()
+        public RoomEntrance(char symbol) : base(symbol)
+        {
+        }
+
+        public override void OnEnter()
         {
             Console.WriteLine("This room contains stairs leading up.");
         }
 
-        public void OnInteract()
+        public override void OnInteract()
         {
             Console.WriteLine("There is nothing to interact with.");
         }
 
-        public void OnLeave()
+        public override void OnLeave()
         {
             Console.WriteLine("You walk into the room beyond.");
         }
 
-        public void ResetRoom()
+        public override void ResetRoom()
         {
             // nothing to reset.
         }

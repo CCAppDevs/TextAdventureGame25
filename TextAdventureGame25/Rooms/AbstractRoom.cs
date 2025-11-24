@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextAdventureGame25
+namespace TextAdventureGame25.Rooms
 {
     public abstract class AbstractRoom : IRoom
     {
@@ -15,14 +15,16 @@ namespace TextAdventureGame25
             RoomSymbol = symbol;
         }
 
-        public char GetRoomSymbol()
-        {
-            return RoomSymbol;
-        }
+
 
         public abstract void OnEnter();
         public abstract void OnInteract();
         public abstract void OnLeave();
         public abstract void ResetRoom();
+
+        public char GetRoomSymbol()
+        {
+            return RoomSymbol;
+        }
     }
 }

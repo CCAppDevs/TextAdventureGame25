@@ -4,33 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextAdventureGame25
+namespace TextAdventureGame25.Rooms
 {
-    public class RoomEmpty : AbstractRoom
+    public class RoomPuzzle : AbstractRoom
     {
-        public RoomEmpty(char symbol) : base(symbol)
+        public RoomPuzzle(char symbol) : base(symbol)
         {
         }
 
         public override void OnEnter()
         {
-            Console.WriteLine("You enter an empty room.");
+            Console.WriteLine("You encounter a puzzling puzzle.");
         }
 
         public override void OnInteract()
         {
-            Console.WriteLine("There is nothing to interact with.");
+            Console.WriteLine("You get confused...");
         }
 
         public override void OnLeave()
         {
-            // nothing to do
-            Console.WriteLine("You leave the empty room.");
+            Console.WriteLine("You leave the puzzle room.");
         }
 
         public override void ResetRoom()
         {
-            // nothing to reset
         }
     }
 }

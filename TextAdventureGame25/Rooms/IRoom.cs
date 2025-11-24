@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextAdventureGame25
+namespace TextAdventureGame25.Rooms
 {
     public interface IRoom
     {
