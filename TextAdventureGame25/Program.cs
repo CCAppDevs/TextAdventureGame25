@@ -4,25 +4,11 @@
     {
         static void Main(string[] args)
         {
-            // create a framework for a text adventure game
+            Game game = new Game();
 
-            // game class (responsible for the game)
-            // room class (the levels)
-            // map class (maybe)
+            // do game logic here
 
-            //Player player1 = new Player("Jesse", 100);
-            //Enemy enemy1 = new Enemy("Goblin", 10);
-
-            //Console.WriteLine($"{player1.Name} has {player1.Health} health.");
-            //Console.WriteLine($"{enemy1.Name} has {enemy1.Health} health.");
-            //Console.WriteLine();
-            //Console.WriteLine($"{player1.Name} is dead? {player1.IsDead()}");
-            //Console.WriteLine($"{enemy1.Name} is dead? {enemy1.IsDead()}");
-
-            // map class
-            Map gameMap = new Map(25, 25);
-
-            gameMap.PrintMap();
+            game.Run();
         }
     }
 }

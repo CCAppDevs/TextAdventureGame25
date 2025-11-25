@@ -12,6 +12,10 @@ namespace TextAdventureGame25
         public List<List<IRoom>> Rooms { get; set; }
         public int SizeX { get; }
         public int SizeY { get; }
+        public int EntranceX { get; set; }
+        public int EntranceY { get; set; }
+        public int BossX { get; set; }
+        public int BossY { get; set; }
 
         public Map(int sizeX, int sizeY)
         {
@@ -65,10 +69,15 @@ namespace TextAdventureGame25
             }
 
             // replace two rooms with enterance and boss room
-            int enteranceX = rnd.Next(0, Rooms[0].Count());
-            int enteranceY = rnd.Next(0, Rooms.Count());
+            EntranceX = rnd.Next(0, Rooms[0].Count());
+            EntranceY = rnd.Next(0, Rooms.Count());
 
-            Rooms[enteranceY][enteranceX] = new RoomEntrance('S');
+            Rooms[EntranceY][EntranceX] = new RoomEntrance('E');
+
+            BossX = rnd.Next(0, Rooms[0].Count());
+            BossY = rnd.Next(0, Rooms.Count());
+
+            Rooms[BossY][BossX] = new BossRoom('B', new Enemy("Goblin King", 50));
         }
 
         public void PrintMap()
