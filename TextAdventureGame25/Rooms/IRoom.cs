@@ -13,5 +13,6 @@ namespace TextAdventureGame25.Rooms
         void OnInteract();
         void OnLeave();
         void ResetRoom();
+        bool LookAtRoom(Actor searcher);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextAdventureGame25.Rooms;
 
 namespace TextAdventureGame25
 {
@@ -11,6 +12,7 @@ namespace TextAdventureGame25
         Map GameMap { get; set; }
         Player PlayerCharacter { get; set; }
         public bool IsRunning { get; set; }
+        public IRoom? CurrentRoom { get; set; }
 
         public Game()
         {
@@ -34,8 +36,10 @@ namespace TextAdventureGame25
 
             while (IsRunning)
             {
+                Console.Clear();
                 PrintMap();
-                PrintMenu2();
+                OnEnterRoom();
+                ProcessInput();
             }
         }
 
@@ -73,27 +77,47 @@ namespace TextAdventureGame25
             }
         }
 
-        public void PrintMenu2()
+        public void ProcessInput()
         {
-            Console.WriteLine("Where would you like to go? [U]P, [D]OWN, [L]EFT, [R]IGHT, [E]xit");
-            Console.WriteLine();
-            
             ConsoleKeyInfo keypress;
 
-            do
-            {
-                keypress =  Console.ReadKey();
+            
+            keypress =  Console.ReadKey(true);
                 
-                if (keypress.Key == ConsoleKey.UpArrow)
-                {
-                    PlayerCharacter.MoveDown(-1);
-                }
+            if (keypress.Key == ConsoleKey.UpArrow || keypress.Key == ConsoleKey.W)
+            {
+                PlayerCharacter.MoveDown(-1);
+            }
+            
+            if (keypress.Key == ConsoleKey.DownArrow || keypress.Key == ConsoleKey.S)
+            {
+                PlayerCharacter.MoveDown(1);
+            }
+            
+            if (keypress.Key == ConsoleKey.LeftArrow || keypress.Key == ConsoleKey.A)
+            {
+                PlayerCharacter.MoveRight(-1);
+            }
 
-                if (keypress.Key == ConsoleKey.DownArrow)
+            if (keypress.Key == ConsoleKey.RightArrow || keypress.Key == ConsoleKey.D)
+            {
+                PlayerCharacter.MoveRight(1);
+            }
+
+            if (keypress.Key == ConsoleKey.Escape)
+            {
+                IsRunning = false;
+            }
+
+            if (keypress.Key == ConsoleKey.L)
+            {
+                Console.WriteLine("You look around...");
+                if (CurrentRoom != null)
                 {
-                    PlayerCharacter.MoveDown(1);
+                    CurrentRoom.LookAtRoom(PlayerCharacter);
+                    Console.ReadLine();
                 }
-            } while (keypress.Key != ConsoleKey.Escape);
+            }
         }
 
         public void PrintMap()
@@ -104,7 +128,10 @@ namespace TextAdventureGame25
                 {
                     if (PlayerCharacter.PosX == x && PlayerCharacter.PosY == y)
                     {
+                        var oldColor = Console.ForegroundColor;
+                        Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write("[@]");
+                        Console.ForegroundColor = oldColor;
                     } else
                     {
                         Console.Write($"[{GameMap.Rooms[y][x].GetRoomSymbol()}]");
@@ -112,6 +139,13 @@ namespace TextAdventureGame25
                 }
                 Console.WriteLine();
             }
+        }
+
+        public void OnEnterRoom()
+        {
+            CurrentRoom = GameMap.GetRoomAtPosition(PlayerCharacter.PosX, PlayerCharacter.PosY);
+
+            CurrentRoom.OnEnter();
         }
     }
 }

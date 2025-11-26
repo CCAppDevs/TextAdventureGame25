@@ -14,7 +14,7 @@ namespace TextAdventureGame25.Rooms
 
         public override void OnEnter()
         {
-            Console.WriteLine("You enter an empty room.");
+            Console.WriteLine("You see an empty room.");
         }
 
         public override void OnInteract()

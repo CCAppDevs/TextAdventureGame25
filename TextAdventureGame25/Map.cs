@@ -80,16 +80,9 @@ namespace TextAdventureGame25
             Rooms[BossY][BossX] = new BossRoom('B', new Enemy("Goblin King", 50));
         }
 
-        public void PrintMap()
+        public IRoom GetRoomAtPosition(int x, int y)
         {
-            for (int y = 0; y < Rooms.Count; y++)
-            {
-                for (int x = 0; x < Rooms[y].Count; x++)
-                {
-                    Console.Write($"[{Rooms[y][x].GetRoomSymbol()}]");
-                }
-                Console.WriteLine();
-            }
+            return Rooms[y][x];
         }
     }
 }

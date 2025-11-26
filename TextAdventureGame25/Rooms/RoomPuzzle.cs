@@ -12,6 +12,11 @@ namespace TextAdventureGame25.Rooms
         {
         }
 
+        public override bool LookAtRoom(Actor searcher)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void OnEnter()
         {
             Console.WriteLine("You encounter a puzzling puzzle.");

@@ -35,5 +35,10 @@ namespace TextAdventureGame25.Rooms
         {
             GoldReward = 10;
         }
+
+        public override bool LookAtRoom(Actor searcher)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

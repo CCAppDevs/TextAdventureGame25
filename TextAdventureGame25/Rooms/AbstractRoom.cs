@@ -21,6 +21,11 @@ namespace TextAdventureGame25.Rooms
         public abstract void OnInteract();
         public abstract void OnLeave();
         public abstract void ResetRoom();
+        public virtual bool LookAtRoom(Actor searcher)
+        {
+            OnEnter();
+            return true;
+        }
 
         public char GetRoomSymbol()
         {

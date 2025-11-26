@@ -41,5 +41,10 @@ namespace TextAdventureGame25.Rooms
         public override void ResetRoom()
         {
         }
+
+        public override bool LookAtRoom(Actor searcher)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
