@@ -8,7 +8,7 @@ namespace TextAdventureGame25.Rooms
 {
     public class RoomPuzzle : AbstractRoom
     {
-        public RoomPuzzle(char symbol) : base(symbol)
+        public RoomPuzzle(char symbol) : base(symbol, ConsoleColor.Yellow)
         {
         }
 

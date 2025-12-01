@@ -10,7 +10,7 @@ namespace TextAdventureGame25.Rooms
     {
         public Enemy Boss { get; set; }
 
-        public BossRoom(char symbol, Enemy enemy) : base(symbol)
+        public BossRoom(char symbol, Enemy enemy) : base(symbol, ConsoleColor.Green)
         {
             Boss = enemy;
         }
@@ -30,7 +30,15 @@ namespace TextAdventureGame25.Rooms
             if (Boss.IsDead())
             {
                 Console.WriteLine("You step past the defeated boss into the stairwell below.");
-                // TODO: trigger the next map here
+                // TODO: trigger the next map here (in the game class)
+                Game currentInstance = Game.GetInstance();
+
+                if (currentInstance == null)
+                {
+                    throw new Exception("Game instance not found");
+                }
+
+                currentInstance.OnExitMap();
             }
             else
             {

@@ -27,24 +27,12 @@ namespace TextAdventureGame25
             AttackPower = 1;
         }
 
-        public void MoveRight(int spaces)
-        {
-            PosX += spaces;
-            // TODO: look for edge of map, can i move here
-        }
-
-        public void MoveDown(int spaces) 
-        {
-            PosY += spaces;
-            // TODO: look for edge of map, can i move here
-        }
-
-        public void Teleport(int x, int y)
-        {
-            PosX = x;
-            PosY = y;
-            // TODO: does this position exist on the map, can i move here
-        }
+        //public void Teleport(int x, int y)
+        //{
+        //    PosX = x;
+        //    PosY = y;
+        //    // TODO: does this position exist on the map, can i move here
+        //}
 
         public bool IsDead()
         {

@@ -10,7 +10,7 @@ namespace TextAdventureGame25.Rooms
     {
         public int GoldReward { get; private set; }
 
-        public RoomLoot(char symbol, int gold) : base(symbol)
+        public RoomLoot(char symbol, int gold) : base(symbol, ConsoleColor.Magenta)
         {
             GoldReward = gold;
         }

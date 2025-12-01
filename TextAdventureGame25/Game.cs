@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using TextAdventureGame25.Rooms;
@@ -9,25 +10,37 @@ namespace TextAdventureGame25
 {
     public class Game
     {
-        Map GameMap { get; set; }
+        public static Game Instance { get; private set; }
+
+        Map[] GameMap { get; set; }
+        int CurrentFloor {  get; set; }
         Player PlayerCharacter { get; set; }
         public bool IsRunning { get; set; }
         public IRoom? CurrentRoom { get; set; }
 
         public Game()
         {
-            GameMap = new Map(25, 25);
+            CurrentFloor = 0;
+            GameMap = new Map[100];
+
+            for (int i = 0; i < GameMap.Length; i++)
+            {
+                GameMap[i] = new Map(25, 25);
+            }
+
+            //GameMap = new Map(25, 25);
             
             PlayerCharacter = new Player(
                 "Jesse",
                 100,
-                GameMap.EntranceX,
-                GameMap.EntranceY,
-                GameMap.SizeX,
-                GameMap.SizeY
+                GameMap[CurrentFloor].EntranceX,
+                GameMap[CurrentFloor].EntranceY,
+                GameMap[CurrentFloor].SizeX,
+                GameMap[CurrentFloor].SizeY
             );
 
             IsRunning = false;
+            Instance = this;
         }
 
         public void Run()
@@ -122,9 +135,9 @@ namespace TextAdventureGame25
 
         public void PrintMap()
         {
-            for (int y = 0; y < GameMap.Rooms.Count; y++)
+            for (int y = 0; y < GameMap[CurrentFloor].Rooms.Count; y++)
             {
-                for (int x = 0; x < GameMap.Rooms[y].Count; x++)
+                for (int x = 0; x < GameMap[CurrentFloor].Rooms[y].Count; x++)
                 {
                     if (PlayerCharacter.PosX == x && PlayerCharacter.PosY == y)
                     {
@@ -134,7 +147,10 @@ namespace TextAdventureGame25
                         Console.ForegroundColor = oldColor;
                     } else
                     {
-                        Console.Write($"[{GameMap.Rooms[y][x].GetRoomSymbol()}]");
+                        var oldColor = Console.ForegroundColor;
+                        Console.ForegroundColor = GameMap[CurrentFloor].Rooms[y][x].RoomColor;
+                        Console.Write($"[{GameMap[CurrentFloor].Rooms[y][x].GetRoomSymbol()}]");
+                        Console.ForegroundColor = oldColor;
                     }
                 }
                 Console.WriteLine();
@@ -143,9 +159,24 @@ namespace TextAdventureGame25
 
         public void OnEnterRoom()
         {
-            CurrentRoom = GameMap.GetRoomAtPosition(PlayerCharacter.PosX, PlayerCharacter.PosY);
+            CurrentRoom = GameMap[CurrentFloor].GetRoomAtPosition(PlayerCharacter.PosX, PlayerCharacter.PosY);
 
             CurrentRoom.OnEnter();
+        }
+
+        public void OnExitMap()
+        {
+            // switch to a new map
+            // dont do this GameMap = new Map(25, 25);
+            CurrentFloor++;
+
+            // place the player at the entrance
+            // continue playing
+        }
+
+        public static Game GetInstance()
+        {
+            return Game.Instance;
         }
     }
 }

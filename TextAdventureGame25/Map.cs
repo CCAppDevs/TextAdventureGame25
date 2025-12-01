@@ -39,7 +39,6 @@ namespace TextAdventureGame25
                     // choose a random room type (0-4)
                     int roomType = rnd.Next(0, 100);
 
-                    // TODO: Weight which type of room spawns
                     IRoom spawnedRoom;
 
                     if (roomType <= 10)
@@ -52,7 +51,14 @@ namespace TextAdventureGame25
                     }
                     else if (roomType <= 75)
                     {
-                        spawnedRoom = new RoomMonster('M', new Enemy("Goblin", 10));
+                        if (roomType <= 60)
+                        {
+                            spawnedRoom = new RoomMonster('M', new Enemy("Goblin", 10), ConsoleColor.DarkGreen);
+                        }
+                        else
+                        {
+                            spawnedRoom = new RoomMonster('M', new Enemy("Slime", 5), ConsoleColor.DarkGray);
+                        }
                     }
                     else if (roomType <= 80)
                     {

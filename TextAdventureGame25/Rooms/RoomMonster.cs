@@ -10,7 +10,7 @@ namespace TextAdventureGame25.Rooms
     {
         public Enemy EncounteredEnemy { get; set; }
 
-        public RoomMonster(char symbol, Enemy enemy) : base(symbol)
+        public RoomMonster(char symbol, Enemy enemy, ConsoleColor color) : base(symbol, color)
         {
             EncounteredEnemy = enemy;
         }

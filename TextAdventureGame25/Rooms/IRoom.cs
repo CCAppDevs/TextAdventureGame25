@@ -8,6 +8,10 @@ namespace TextAdventureGame25.Rooms
 {
     public interface IRoom
     {
+        // property
+        ConsoleColor RoomColor { get; set; }
+
+        // method
         char GetRoomSymbol();
         void OnEnter();
         void OnInteract();
