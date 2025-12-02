@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextAdventureGame25
 {
-    public abstract class Actor
+    public abstract class Actor : IAttackable, ICombat
     {
         public string Name { get; set; }
         public int Health { get; set; }
@@ -18,25 +18,47 @@ namespace TextAdventureGame25
 
         // TODO: add inventory slots (items, weapons, armor)
 
-        public Actor(string name, int maxHealth)
+        public Actor(string name, int maxHealth, int attackPower)
         {
             Name = name;
             MaxHealth = maxHealth;
             Health = maxHealth;
             Level = 1;
-            AttackPower = 1;
+            AttackPower = attackPower;
         }
-
-        //public void Teleport(int x, int y)
-        //{
-        //    PosX = x;
-        //    PosY = y;
-        //    // TODO: does this position exist on the map, can i move here
-        //}
 
         public bool IsDead()
         {
             return Health <= 0;
+        }
+
+        public bool TakeDamage(int amount)
+        {
+            Health = Health - amount;
+
+            // clamp the value to 0-MaxHealth
+            if (Health < 0)
+            {
+                Health = 0;
+            }
+            else if (Health > MaxHealth)
+            {
+                Health = MaxHealth;
+            }
+
+            return true;
+        }
+
+        public bool MakeAttack(Actor target, int damage)
+        {
+            Console.WriteLine($"{Name} makes a wild attack at {target.Name}.");
+
+            return target.TakeDamage(damage);
+        }
+
+        public virtual void RunCombat(Actor opponent)
+        {
+            throw new NotImplementedException();
         }
     }
 }

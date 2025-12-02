@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace TextAdventureGame25
 {
-    public interface IAttackable
+    public interface ICombat
     {
-        bool TakeDamage(int amount);
+        bool MakeAttack(Actor target, int damage);
+        void RunCombat(Actor opponent);
     }
 }

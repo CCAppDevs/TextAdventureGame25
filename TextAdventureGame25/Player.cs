@@ -8,12 +8,10 @@ namespace TextAdventureGame25
 {
     public class Player : Actor, IAttackable
     {
-        public int PosX { get; set; }
-        public int PosY { get; set; }
         public int MapX { get; set; }
         public int MapY { get; set; }
 
-        public Player(string name, int maxHealth, int posX, int posY, int mapX, int mapY) : base(name, maxHealth)
+        public Player(string name, int maxHealth, int attackPower, int posX, int posY, int mapX, int mapY) : base(name, maxHealth, attackPower)
         {
             PosX = posX;
             PosY = posY;
@@ -44,21 +42,6 @@ namespace TextAdventureGame25
             else if (PosX < 0)
             {
                 PosX = 0;
-            }
-        }
-
-        public void TakeDamage(int amount)
-        {
-            Health = Health - amount;
-
-            // clamp the value to 0-MaxHealth
-            if (Health < 0)
-            {
-                Health = 0;
-            }
-            else if (Health > MaxHealth)
-            {
-                Health = MaxHealth;
             }
         }
     }

@@ -53,11 +53,11 @@ namespace TextAdventureGame25
                     {
                         if (roomType <= 60)
                         {
-                            spawnedRoom = new RoomMonster('M', new Enemy("Goblin", 10), ConsoleColor.DarkGreen);
+                            spawnedRoom = new RoomMonster('M', new Enemy("Goblin", 10, 2), ConsoleColor.DarkGreen);
                         }
                         else
                         {
-                            spawnedRoom = new RoomMonster('M', new Enemy("Slime", 5), ConsoleColor.DarkGray);
+                            spawnedRoom = new RoomMonster('M', new Enemy("Slime", 5, 10), ConsoleColor.DarkGray);
                         }
                     }
                     else if (roomType <= 80)
@@ -83,7 +83,7 @@ namespace TextAdventureGame25
             BossX = rnd.Next(0, Rooms[0].Count());
             BossY = rnd.Next(0, Rooms.Count());
 
-            Rooms[BossY][BossX] = new BossRoom('B', new Enemy("Goblin King", 50));
+            Rooms[BossY][BossX] = new BossRoom('B', new Enemy("Goblin King", 50, 15));
         }
 
         public IRoom GetRoomAtPosition(int x, int y)

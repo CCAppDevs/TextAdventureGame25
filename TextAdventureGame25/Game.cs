@@ -14,7 +14,7 @@ namespace TextAdventureGame25
 
         Map[] GameMap { get; set; }
         int CurrentFloor {  get; set; }
-        Player PlayerCharacter { get; set; }
+        public Player PlayerCharacter { get; set; }
         public bool IsRunning { get; set; }
         public IRoom? CurrentRoom { get; set; }
 
@@ -33,6 +33,7 @@ namespace TextAdventureGame25
             PlayerCharacter = new Player(
                 "Jesse",
                 100,
+                5,
                 GameMap[CurrentFloor].EntranceX,
                 GameMap[CurrentFloor].EntranceY,
                 GameMap[CurrentFloor].SizeX,
