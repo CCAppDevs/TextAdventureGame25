@@ -8,7 +8,6 @@ namespace TextAdventureGame25
 {
     public interface ICombat
     {
-        bool MakeAttack(Actor target, int damage);
-        void RunCombat(Actor opponent);
+        bool MakeAttack(Actor target);
     }
 }

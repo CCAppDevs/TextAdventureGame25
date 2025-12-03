@@ -17,17 +17,15 @@ namespace TextAdventureGame25.Rooms
 
         public override void OnEnter()
         {
-            Game game = Game.GetInstance();
-
-            if (EncounteredEnemy.HasBeenEncountered)
+            if (EncounteredEnemy.IsDead())
             {
-                Console.WriteLine("An enemy was here but has left.");
-            } else
+                Console.WriteLine($"There is a dead {EncounteredEnemy.Name} on the floor.");
+            } 
+            else
             {
                 Console.WriteLine($"A wild {EncounteredEnemy.Name} appears!");
-                EncounteredEnemy.RunCombat(game.PlayerCharacter);
+                GameInstance.RunCombat(GameInstance.PlayerCharacter, EncounteredEnemy);
             }
-                
         }
 
         public override void OnInteract()

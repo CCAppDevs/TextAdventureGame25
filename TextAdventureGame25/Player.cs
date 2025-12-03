@@ -44,5 +44,25 @@ namespace TextAdventureGame25
                 PosX = 0;
             }
         }
+
+        public override bool MakeAttack(Actor target)
+        {
+            Random rnd = new Random();
+
+            int damageAdditive = rnd.Next(1, AttackPower);
+
+            int attackDamage = AttackPower + damageAdditive;
+
+            if (attackDamage > (AttackPower * 1.5))
+            {
+                Console.WriteLine($"{Name} channels their inner fury and hits for massive damage! {target.Name} takes {attackDamage} damage.");
+            }
+            else
+            {
+                Console.WriteLine($"{Name} makes a wild attack at {target.Name}. {target.Name} takes {attackDamage} damage.");
+            }
+
+            return target.TakeDamage(attackDamage);
+        }
     }
 }

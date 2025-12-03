@@ -18,50 +18,24 @@ namespace TextAdventureGame25
             HasBeenEncountered = false;
         }
 
-        public override void RunCombat(Actor opponent)
+        public override bool MakeAttack(Actor target)
         {
-            bool isInCombat = true;
-            HasBeenEncountered = true;
+            Random rnd = new Random();
 
-            while (isInCombat)
+            int damageAdditive = rnd.Next(1, AttackPower);
+
+            int attackDamage = AttackPower + damageAdditive;
+
+            if (attackDamage > (AttackPower * 1.5))
             {
-                Console.WriteLine("What would you like to do: (a)ttack, (r)un?");
-
-                ConsoleKeyInfo keypress;
-
-                keypress = Console.ReadKey(true);
-
-                if (keypress.Key == ConsoleKey.A)
-                {
-                    // have player attack
-                    Console.WriteLine($"{opponent.Name} makes an attack!");
-                    opponent.MakeAttack(this, opponent.AttackPower);
-                }
-                else if (keypress.Key == ConsoleKey.R)
-                {
-                    // end combat and run away, end the loop early
-                    Console.WriteLine($"{opponent.Name} attempts to run away.");
-                    isInCombat = false;
-                    break;
-                }
-
-                // enemy counter
-                opponent.TakeDamage(AttackPower);
-
-                // check if either is dead
-                if (opponent.IsDead())
-                {
-                    // cheer for the enemy
-                    // exit combat (game over)
-                    isInCombat = false;
-                }
-                else if (IsDead())
-                {
-                    // give the player a reward
-                    // exit combat as a success
-                    isInCombat = false;
-                }
+                Console.WriteLine($"{Name} gets super lucky and hits you in a vital spot. You take {attackDamage} damage!");
             }
+            else
+            {
+                Console.WriteLine($"{Name} charges at {target.Name} and deals {attackDamage} damage!");
+            }
+
+            return target.TakeDamage(attackDamage);
         }
     }
 }

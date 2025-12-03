@@ -49,16 +49,11 @@ namespace TextAdventureGame25
             return true;
         }
 
-        public bool MakeAttack(Actor target, int damage)
+        public virtual bool MakeAttack(Actor target)
         {
             Console.WriteLine($"{Name} makes a wild attack at {target.Name}.");
 
-            return target.TakeDamage(damage);
-        }
-
-        public virtual void RunCombat(Actor opponent)
-        {
-            throw new NotImplementedException();
+            return target.TakeDamage(AttackPower);
         }
     }
 }

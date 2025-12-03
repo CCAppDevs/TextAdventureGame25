@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using TextAdventureGame25.Rooms;
+
+// TODO: remove the wasd movement so we stop having two actions on attack
 
 namespace TextAdventureGame25
 {
@@ -21,6 +24,13 @@ namespace TextAdventureGame25
         public Game()
         {
             CurrentFloor = 0;
+            IsRunning = false;
+            Instance = this;
+        }
+
+        public void Run()
+        {
+            IsRunning = true;
             GameMap = new Map[100];
 
             for (int i = 0; i < GameMap.Length; i++)
@@ -29,7 +39,7 @@ namespace TextAdventureGame25
             }
 
             //GameMap = new Map(25, 25);
-            
+
             PlayerCharacter = new Player(
                 "Jesse",
                 100,
@@ -39,14 +49,6 @@ namespace TextAdventureGame25
                 GameMap[CurrentFloor].SizeX,
                 GameMap[CurrentFloor].SizeY
             );
-
-            IsRunning = false;
-            Instance = this;
-        }
-
-        public void Run()
-        {
-            IsRunning = true;
 
             while (IsRunning)
             {
@@ -178,6 +180,48 @@ namespace TextAdventureGame25
         public static Game GetInstance()
         {
             return Game.Instance;
+        }
+
+        public void RunCombat(Actor player, Actor enemy)
+        {
+            bool isInCombat = true;
+
+            while (isInCombat)
+            {
+                Console.WriteLine("What would you like to do: (a)ttack, (r)un?");
+
+                ConsoleKeyInfo keypress;
+
+                keypress = Console.ReadKey(true);
+
+                if (keypress.Key == ConsoleKey.A)
+                {
+                    player.MakeAttack(enemy);
+                }
+                else if (keypress.Key == ConsoleKey.R)
+                {
+                    // end combat and run away, end the loop early
+                    Console.WriteLine($"{player.Name} attempts to run away.");
+                    isInCombat = false;
+                    // TODO: add code to move the player somewhere nearby
+                    break;
+                }
+
+                // enemy counter attack
+                enemy.MakeAttack(player);
+
+                // check for victory conditions
+                if (player.IsDead())
+                {
+                    // exit combat (game over)
+                    isInCombat = false;
+                }
+                else if (enemy.IsDead())
+                {
+                    // exit combat, give the player a cookie
+                    isInCombat = false;
+                }
+            }
         }
     }
 }
