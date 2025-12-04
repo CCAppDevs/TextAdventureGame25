@@ -64,5 +64,19 @@ namespace TextAdventureGame25
 
             return target.TakeDamage(attackDamage);
         }
+
+        public void HealPlayer(int amount)
+        {
+            Health = Health + amount;
+
+            if (Health < 0)
+            {
+                Health = 0;
+            }
+            else if (Health > MaxHealth)
+            {
+                Health = MaxHealth;
+            }
+        }
     }
 }

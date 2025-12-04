@@ -8,23 +8,34 @@ namespace TextAdventureGame25.Rooms
 {
     public class RoomLoot : AbstractRoom
     {
-        public int GoldReward { get; private set; }
+        public int HealthReward { get; private set; }
+        public bool HasConsumed = false;
 
-        public RoomLoot(char symbol, int gold) : base(symbol, ConsoleColor.Magenta)
+        public RoomLoot(char symbol, int health) : base(symbol, ConsoleColor.Magenta)
         {
-            GoldReward = gold;
+            HealthReward = health;
         }
 
         public override void OnEnter()
         {
-            Console.WriteLine("You enter a room with a chest inside!");
+            if (HasConsumed)
+            {
+                Console.WriteLine("You find an empty chest.");
+            } else
+            {
+                Console.WriteLine("You enter a room with a chest inside!");
+                Console.WriteLine("You open the chest and find a health potion!");
+                GameInstance.PlayerCharacter.HealPlayer(HealthReward);
+                Console.WriteLine($"{GameInstance.PlayerCharacter.Name} has {GameInstance.PlayerCharacter.Health} left.");
+                HasConsumed = true;
+            }
         }
 
         public override void OnInteract()
         {
-            Console.WriteLine($"You find inside the chest {GoldReward} gold!");
+            Console.WriteLine($"You find inside the chest {HealthReward} gold!");
             // TODO: add code to give the player some gold
-            GoldReward = 0;
+            HealthReward = 0;
         }
 
         public override void OnLeave()
@@ -33,7 +44,7 @@ namespace TextAdventureGame25.Rooms
 
         public override void ResetRoom()
         {
-            GoldReward = 10;
+            HealthReward = 10;
         }
 
         public override bool LookAtRoom(Actor searcher)

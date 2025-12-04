@@ -43,7 +43,7 @@ namespace TextAdventureGame25
 
                     if (roomType <= 10)
                     {
-                        spawnedRoom = new RoomLoot('$', 100);
+                        spawnedRoom = new RoomLoot('$', 10);
                     }
                     else if (roomType <= 50)
                     {
@@ -83,7 +83,7 @@ namespace TextAdventureGame25
             BossX = rnd.Next(0, Rooms[0].Count());
             BossY = rnd.Next(0, Rooms.Count());
 
-            Rooms[BossY][BossX] = new BossRoom('B', new Enemy("Goblin King", 50, 15));
+            Rooms[BossY][BossX] = new BossRoom('B', new Enemy("Goblin King", 25, 15));
         }
 
         public IRoom GetRoomAtPosition(int x, int y)

@@ -17,7 +17,17 @@ namespace TextAdventureGame25.Rooms
 
         public override void OnEnter()
         {
-            Console.WriteLine($"You enter a large chamber. Inside you find {Boss.Name} waiting for you.");
+            if (Boss.IsDead())
+            {
+                Console.WriteLine($"You have defeated the floor boss.");
+                // trigger floor change
+                OnLeave();
+            }
+            else
+            {
+                Console.WriteLine($"You enter a large chamber. Inside you find {Boss.Name} waiting for you.");
+                GameInstance.RunCombat(GameInstance.PlayerCharacter, Boss);
+            }
         }
 
         public override void OnInteract()
@@ -30,15 +40,8 @@ namespace TextAdventureGame25.Rooms
             if (Boss.IsDead())
             {
                 Console.WriteLine("You step past the defeated boss into the stairwell below.");
-                // TODO: trigger the next map here (in the game class)
-                Game currentInstance = Game.GetInstance();
 
-                if (currentInstance == null)
-                {
-                    throw new Exception("Game instance not found");
-                }
-
-                currentInstance.OnExitMap();
+                GameInstance.OnExitMap();
             }
             else
             {

@@ -9,7 +9,7 @@ namespace TextAdventureGame25.Rooms
     public abstract class AbstractRoom : IRoom
     {
         public Game GameInstance { get; }
-        private char RoomSymbol { get; }
+        private char RoomSymbol { get; set; }
         public ConsoleColor RoomColor { get; set; }
         
         protected AbstractRoom(char symbol, ConsoleColor color = ConsoleColor.White)
@@ -34,6 +34,11 @@ namespace TextAdventureGame25.Rooms
         public char GetRoomSymbol()
         {
             return RoomSymbol;
+        }
+
+        public void ChangeRoomSymbol(char roomSymbol)
+        {
+            RoomSymbol = roomSymbol;
         }
     }
 }

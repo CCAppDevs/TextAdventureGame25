@@ -5,9 +5,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Sources;
 using TextAdventureGame25.Rooms;
-
-// TODO: remove the wasd movement so we stop having two actions on attack
 
 namespace TextAdventureGame25
 {
@@ -100,22 +99,22 @@ namespace TextAdventureGame25
             
             keypress =  Console.ReadKey(true);
                 
-            if (keypress.Key == ConsoleKey.UpArrow || keypress.Key == ConsoleKey.W)
+            if (keypress.Key == ConsoleKey.UpArrow)
             {
                 PlayerCharacter.MoveDown(-1);
             }
             
-            if (keypress.Key == ConsoleKey.DownArrow || keypress.Key == ConsoleKey.S)
+            if (keypress.Key == ConsoleKey.DownArrow)
             {
                 PlayerCharacter.MoveDown(1);
             }
             
-            if (keypress.Key == ConsoleKey.LeftArrow || keypress.Key == ConsoleKey.A)
+            if (keypress.Key == ConsoleKey.LeftArrow)
             {
                 PlayerCharacter.MoveRight(-1);
             }
 
-            if (keypress.Key == ConsoleKey.RightArrow || keypress.Key == ConsoleKey.D)
+            if (keypress.Key == ConsoleKey.RightArrow)
             {
                 PlayerCharacter.MoveRight(1);
             }
@@ -172,9 +171,14 @@ namespace TextAdventureGame25
             // switch to a new map
             // dont do this GameMap = new Map(25, 25);
             CurrentFloor++;
+            TeleportPlayerToEntrance();
+        }
 
-            // place the player at the entrance
-            // continue playing
+        public void TeleportPlayerToEntrance()
+        {
+            // place the players position at that location
+            PlayerCharacter.PosX = GameMap[CurrentFloor].EntranceX;
+            PlayerCharacter.PosY = GameMap[CurrentFloor].EntranceY;
         }
 
         public static Game GetInstance()
@@ -215,10 +219,13 @@ namespace TextAdventureGame25
                 {
                     // exit combat (game over)
                     isInCombat = false;
+                    IsRunning = false;
+                    Console.WriteLine("You have died. Please make another hero and try again.");
                 }
                 else if (enemy.IsDead())
                 {
                     // exit combat, give the player a cookie
+                    CurrentRoom.ChangeRoomSymbol(' ');
                     isInCombat = false;
                 }
             }
